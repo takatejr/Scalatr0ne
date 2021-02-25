@@ -1,0 +1,11 @@
+.bsp
+.bloop
+.metals
+target
+*.txt
+../.vscode
+src/main/scala/playground.scala
+.g8
+.vscode
+logs
+app/other
