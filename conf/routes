@@ -4,7 +4,7 @@
 # ~~~~
 
 # the page you get when you go to http://localhost:9000/
-GET   /     controllers.WebSocketsController.index
+GET   /     controllers.HomeController.index
 
 # the websocket that will be used by that index page
 GET   /ws   controllers.WebSocketsController.ws

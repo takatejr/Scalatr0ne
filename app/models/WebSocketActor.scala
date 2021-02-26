@@ -3,11 +3,9 @@ package models
 import akka.actor._
 import play.api.libs.json._
 import play.api.libs.json.Json
+import play.api.libs.streams.ActorFlow
 
 object WebSocketActor {
-    // DOCS: Props is a ActorRef configuration object, that is immutable, so it is 
-    // thread-safe and fully sharable. Used when creating new actors through 
-    // ActorSystem.actorOf and ActorContext.actorOf.
     def props(clientActorRef: ActorRef) = Props(new WebSocketActor(clientActorRef))
 }
 
@@ -16,8 +14,6 @@ class WebSocketActor(clientActorRef: ActorRef) extends Actor {
 
     logger.info(s"WebSocketActor class started")
 
-    // this is where we receive json messages sent by the client
-    // and send them a json reply
     def receive = {
         case jsValue: JsValue =>
             println(s"$jsValue")
@@ -27,7 +23,6 @@ class WebSocketActor(clientActorRef: ActorRef) extends Actor {
             clientActorRef ! (json)
     }
 
-    // parse the "message" field from the json the client sends us
     def getMessage(json: JsValue): String = (json \ "message").as[String]
 
 }

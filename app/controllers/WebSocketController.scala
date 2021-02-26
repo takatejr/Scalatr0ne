@@ -7,6 +7,8 @@ import akka.actor.ActorSystem
 import akka.stream.Materializer
 import models.WebSocketActor
 import play.api.libs.json._
+import akka.event.slf4j.Logger
+import models.LogHandlerActor
 
 class WebSocketsController @Inject() (cc: ControllerComponents)(implicit system: ActorSystem)
 extends AbstractController(cc)
