@@ -10,21 +10,19 @@ import play.api.libs.json.JsValue
 
 
 object LogHandlerActor {
-  def props(clientActorRef: ActorRef) = Props(
-    new WebSocketActor(clientActorRef)
-  )
+  case class writeToLog(message: String)
 }
 
-class LogHandlerActor(clientActorRef: ActorRef) extends Actor {
+class LogHandlerActor extends Actor {
+  import LogHandlerActor._
+  def receive: Receive = logger
 
-  def receive: Receive = {
-    case jsValue: JsValue => {
-        val (filePath, content) = jsValue
-      val log = new PrintWriter(new FileOutputStream(new File(jsValue.filePath), true)))
+  def logger: Receive = {
+    case writeToLog(message) => {
+      val log = new PrintWriter(new FileOutputStream(new File(filePath)))
 
-      log.write(jsValue.content)
+      log.write(message)
       log.close()
     }
   }
-
 }
