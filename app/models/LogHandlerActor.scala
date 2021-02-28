@@ -10,17 +10,19 @@ import play.api.libs.json.JsValue
 
 
 object LogHandlerActor {
-  case class writeToLog(message: String)
+  def props(filePath: String, message: String) = Props(new LogHandlerActor(filePath: String, message: String))
+  case class writeToLog(filePath: String, message: String)
 }
 
-class LogHandlerActor extends Actor {
+class LogHandlerActor(filePath: String, message: String) extends Actor {
   import LogHandlerActor._
-  def receive: Receive = logger
+
+  override def receive: Receive = logger
 
   def logger: Receive = {
-    case writeToLog(message) => {
+    case writeToLog(filePath, message) => {
       val log = new PrintWriter(new FileOutputStream(new File(filePath)))
-
+      println(message)
       log.write(message)
       log.close()
     }
