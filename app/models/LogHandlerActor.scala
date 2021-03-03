@@ -22,9 +22,17 @@ class LogHandlerActor(filePath: String, message: String) extends Actor {
   def logger: Receive = {
     case writeToLog(filePath, message) => {
       val log = new PrintWriter(new FileOutputStream(new File(filePath)))
+
       println(message)
+
+      // write to file
       log.write(message)
+
+      // close file
       log.close()
+
+      // stop actor
+      context.stop(self)
     }
   }
 }

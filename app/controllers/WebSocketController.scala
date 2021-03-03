@@ -27,5 +27,4 @@ extends AbstractController(cc)
             WebSocketActor.props(actorRef)
         }
     }
-
 }
